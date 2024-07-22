@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { View, Text } from "react-native";
+import { Octicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function TabsLayout() {
@@ -42,6 +43,15 @@ export default function TabsLayout() {
           headerTitle: "Profile",
           tabBarIcon: ({ color }) => (
             <Entypo name="user" size={26} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Reels"
+        options={{
+          headerTitle: "Reels",
+          tabBarIcon: ({ color }) => (
+            <Octicons name="video" size={24} color="black" />
           ),
         }}
       />

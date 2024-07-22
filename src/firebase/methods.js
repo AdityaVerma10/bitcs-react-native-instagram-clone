@@ -119,3 +119,24 @@ export const updateUserDetails = async (userId, Details) => {
 
   return true;
 };
+
+export const getReels = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "reels"));
+
+    let reels = [];
+    querySnapshot.forEach((doc) => {
+      reels.push({ docId: doc.id, ...doc.data() });
+    });
+
+    for (let i = 0; i < reels.length; i++) {
+      const userDetails = await getUserDetailsById(reels[i].userId);
+      reels[i] = { ...reels[i], userDetails };
+    }
+
+    return reels;
+  } catch (error) {
+    console.error(error.message);
+    return false;
+  }
+};
