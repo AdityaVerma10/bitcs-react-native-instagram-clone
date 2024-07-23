@@ -27,15 +27,15 @@ export default function UserProfile() {
       <Tabs.Screen
         options={{
           headerTitle: () => (
-            <View className="flex flex-row w-full justify-between items-start ">
-              <View className="flex flex-row items-center gap-2">
-                <Text className="text-[1.5rem]">{userDetails?.username}</Text>
-                <AntDesign name="down" size={20} color="black" />
-              </View>
-              <Pressable onPress={() => router.replace("/settings")}>
-                <Feather name="settings" size={24} color="black" />
-              </Pressable>
+            <View className="flex flex-row items-center gap-2">
+              <Text className="text-[1.5rem]">{userDetails?.username}</Text>
+              <AntDesign name="down" size={20} color="black" />
             </View>
+          ),
+          headerRight: () => (
+            <Pressable onPress={() => router.replace("/settings")}>
+              <Feather name="settings" size={24} color="black" />
+            </Pressable>
           ),
         }}
       />

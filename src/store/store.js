@@ -7,4 +7,13 @@ export const store = configureStore({
     user: userReducer,
     posts: postsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredPaths: [
+          "user.userDetails.proactiveRefresh",
+          "posts.proactiveRefresh",
+        ],
+      },
+    }),
 });

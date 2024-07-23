@@ -38,20 +38,21 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
+        name="reels"
+        options={{
+          headerTitle: "Reels",
+          tabBarIcon: ({ color }) => (
+            <Octicons name="video" size={24} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
         name="profile"
         options={{
           headerTitle: "Profile",
           tabBarIcon: ({ color }) => (
             <Entypo name="user" size={26} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Reels"
-        options={{
-          headerTitle: "Reels",
-          tabBarIcon: ({ color }) => (
-            <Octicons name="video" size={24} color="black" />
           ),
         }}
       />

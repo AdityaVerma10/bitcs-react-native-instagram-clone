@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import SingleReel from "../../components/singleReel";
+import { getReels } from "../../firebase/methods";
 
 const ReelsComponent = () => {
   const [reels, setReels] = useState([]);
   useEffect(() => {
-    async function getReels() {
+    async function getdata() {
       const res = await getReels();
       if (res) setReels(res);
     }
+    getdata();
   }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
 

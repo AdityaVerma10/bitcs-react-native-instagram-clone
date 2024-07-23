@@ -7,6 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { fetchUserInfo } from "../../store/userSlice";
 
 export default function Feed() {
   const { loading, error, posts } = useSelector((state) => state.posts);
@@ -19,6 +20,7 @@ export default function Feed() {
   useEffect(() => {
     async function fetchdata() {
       dispatch(fetchPosts());
+      dispatch(fetchUserInfo(user.uid));
     }
     fetchdata();
   }, []);

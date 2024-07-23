@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Image, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  Platform,
+  ScrollView,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
@@ -9,6 +16,7 @@ import { getAuth } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { insertNewPost } from "../../store/postsSlice";
 import { insertNewUserPost } from "../../store/userSlice";
+import { pickImage } from "../../utilities/imagePicker";
 
 export default function CreatePost() {
   const [caption, setCaption] = useState("");
@@ -18,18 +26,10 @@ export default function CreatePost() {
   const router = useRouter();
   const auth = getAuth();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+  const handleImage = async () => {
+    const result = await pickImage();
+    if (result) {
+      setImage(result);
     }
   };
 
@@ -63,40 +63,42 @@ export default function CreatePost() {
     }
   };
   return (
-    <View className=" flex flex-col  gap-10">
-      {image ? (
-        <Image
-          source={{
-            uri: image,
-          }}
-          className="w-[400px] h-[400px]"
-        />
-      ) : (
-        <Text className="text-center text-[1.5rem] pt-2">
-          Please Upload Image !
+    <ScrollView>
+      <View className=" flex flex-col  gap-10">
+        {image ? (
+          <Image
+            source={{
+              uri: image,
+            }}
+            className="w-[400px] h-[400px]"
+          />
+        ) : (
+          <Text className="text-center text-[1.5rem] pt-2">
+            Please Upload Image !
+          </Text>
+        )}
+
+        <Text
+          className="text-[blue] text-[1.4rem]  underline  text-center"
+          onPress={handleImage}
+        >
+          {image ? "Change" : "Upload"}
         </Text>
-      )}
 
-      <Text
-        className="text-[blue] text-[1.4rem]  underline  text-center"
-        onPress={pickImage}
-      >
-        {image ? "Change" : "Upload"}
-      </Text>
+        <TextInput
+          placeholder="Caption"
+          value={caption}
+          onChangeText={setCaption}
+          className="border border-gray-400 ml-2 w-[27.1rem] py-2 px-3 rounded-lg mb-4  "
+        />
 
-      <TextInput
-        placeholder="Caption"
-        value={caption}
-        onChangeText={setCaption}
-        className="border border-gray-400 ml-2 w-[27.1rem] py-2 px-3 rounded-lg mb-4  "
-      />
-
-      <Text
-        className="bg-blue-500 py-3 px-4 rounded-lg self-center w-[6rem] text-center text-[1.2rem] "
-        onPress={handleSave}
-      >
-        Save
-      </Text>
-    </View>
+        <Text
+          className="bg-blue-500 py-3 px-4 rounded-lg self-center w-[6rem] text-center text-[1.2rem] "
+          onPress={handleSave}
+        >
+          Save
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
